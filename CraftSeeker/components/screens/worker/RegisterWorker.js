@@ -16,6 +16,22 @@ const SignUpWorker = () => {
 const [profilePictureUrl, setProfilePictureUrl] = useState('');
 const [Url,setUrl] = useState('')
 
+const verifyUpperCase = function (str){
+  var count = 0
+   for (let i = 0; i < str.length; i++) {
+     const alphabet ="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      for(let j = 0 ; j<alphabet.length;j++){
+         if(str[i]===alphabet[j]){
+             count++
+         }
+     }
+   }
+     if (count>0){
+         return true
+     }
+     else return false
+ }
+
 
    const generateId = function () {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -98,39 +114,46 @@ const handleSelectPicture = async () => {
   }
 };
 const handleSignup = async () => {
-   const cloudName = "dilwfvmbr"
-  const { firstName, lastName, email, password, phoneNumber, job, address, dateOfBirth, category, imageUrl } = userInfo;
+ 
+ const { firstName, lastName, email, password, phoneNumber, job, address, dateOfBirth, category, imageUrl } = userInfo;
 
-  if (userInfo.confirmPassword !== userInfo.password) {
-    Alert.alert("Passwords Don't Match!");
-  } else {
-    try {
-    
+ if (userInfo.confirmPassword !== userInfo.password) {
+   Alert.alert("Passwords Don't Match!");
+ }
+ 
+ if(!verifyUpperCase(userInfo.password)){
+   Alert.alert("You must at least have one uppercase character in your password")
+ }
 
-const obj= {
-  workersId : generateId(),
-  workerFirstName: firstName,
-  workerLastName: lastName,
-  workerAdress: address,
-  workerEmail: email,
-  workerCategory: category,
-  workerDateOfBirth: dateOfBirth,
-  workerPhoneNumber: phoneNumber,
-  workerJob: job,
-  workerPassword: password,
-  imageUrl: JSON.stringify(Url),
+ else if(!userInfo.email.includes("@")){
+   Alert.alert("Give a proper Email")
+ }
+ else {
+   try {
+ const obj= {
+ workersId : generateId(),
+ workerFirstName: firstName,
+ workerLastName: lastName,
+ workerAdress: address,
+ workerEmail: email,
+ workerCategory: category,
+ workerDateOfBirth: dateOfBirth,
+ workerPhoneNumber: phoneNumber,
+ workerJob: job,
+ workerPassword: password,
+ imageUrl: JSON.stringify(Url),
 }
 
-      // Save the worker details in the database
-      const workerResponse = await axios.post(`http://${Link}:4000/api/workers/addworker`,obj );
-      console.log(obj,"dataaaa");
-      console.log(obj.workersId)
-        navigation.navigate('Dashboard', { id: obj.workersId });
+     // Save the worker details in the database
+     const workerResponse = await axios.post(`http://${Link}:4000/api/workers/addworker`,obj );
+     console.log(obj,"dataaaa");
+     console.log(obj.workersId)
+       navigation.navigate('Dashboard', { id: obj.workersId });
 
-    } catch (error) {
-      console.log('Error saving profile:', error);
-    }
-  }
+   } catch (error) {
+     console.log('Error saving profile:', error);
+   }
+ }
 };
 
 
@@ -154,8 +177,20 @@ const obj= {
   };
 
   return (
-    <View >
-      
+
+      <View style={styles.container} >
+      <View style={styles.subcontainer}>
+  
+          <Image
+            source={require('../../../assets/logo.png')}
+            style={styles.logo}
+          /><TouchableOpacity onPress={() => navigation.goBack()}>
+             <Image
+            source={require('../client/back.png')}
+            style={styles.back} 
+          />
+          </TouchableOpacity>
+   
       <StatusBar backgroundColor="#4a90e2" barStyle="light-content" />
       <TouchableOpacity onPress={handleSelectPicture}>
   {profilePicture ? (
@@ -193,7 +228,7 @@ const obj= {
             />
           )}
         </View>
-
+{/* 
         <View style={styles.CategoryContainer}>
           <Text>Select Job Category</Text>
           <Picker
@@ -211,9 +246,9 @@ const obj= {
             <Picker.Item label="Pest Control" value="Pest Control" />
             <Picker.Item label="Other" value="Other" />
 
-          </Picker>
+          </Picker> */}
 
-        </View>
+        {/* </View> */}
         <TouchableHighlight
           style={{ flex: 1, alignSelf: "center", backgroundColor: '#83b5ed', width: "40%", borderRadius: 10, height: 30, justifyContent: "center" }}
           activeOpacity={0.6}
@@ -228,7 +263,9 @@ const obj= {
 
 
     </View>
-  );
+    </View>
+
+);
 };
 
 const styles = StyleSheet.create({
@@ -238,7 +275,43 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     // marginVertical: 15,
+    position:'absolute',
+   top:'30%',
+   width:'80%',
+   height:'80%',
+   left:'7%'
+  },
+  logo:{
+    width:'40%',
+    height:'10%',
+    left:'70%'
+     },
+     back:{
+       width: 30,
+       height: 30,
+       marginLeft: 10,
+       resizeMode: 'contain',
+       top:'-170%',
+     },
    
+  container: {
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#036BB9',
+    borderRadius: 10,
+  },
+  
+  subcontainer: {
+    borderWidth: 8,
+    height: '102%',
+    width: '102%',
+    borderRadius: 8,
+    left: '-1.5%',
+    borderColor: 'white',
+    top: '-1%',
   },
   title: {
     color: '#0386D0',
@@ -268,6 +341,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
   },
+  
+  profilePicturePlaceholder: {
+    top:'-17%',
+    backgroundColor: '#F0F4E3',
+    borderRadius: 100,
+    padding: 16,
+    height:'50%',
+    alignItems: 'center',
+    width:'50%',
+    left:'20%'
+  },
+  profilePicturePlaceholderText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000000',
+    top:'40%',
+  },
+
   calendarIcon: {
     width: 24,
     height: 24,

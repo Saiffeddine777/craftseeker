@@ -75,7 +75,8 @@ workerRouter.post('/addworker', async (req, res) => {
 })
 
 workerRouter.get('/getWorkersInfo', (req, res) => {
-    const sql = `SELECT workerFirstName, workerJob, workerHourlyPrice,workerRating ,imageUrl,workersId  FROM workers;`;
+    const sql = `SELECT workerFirstName, workerJob, workerHourlyPrice,workerRating ,imageUrl,workersId  FROM workers 
+                 WHERE workerAvailabillity = 1;`;
     conn.query(sql, (err, results) => {
       if (err) {
         console.log(err);
@@ -183,6 +184,22 @@ workerRouter.put('/editWorkInfo/:id', (req, res) => {
         res.status(200).json(results)
     })
 })
+workerRouter.post('/rateaworker',(req, res)=>{
+  const {rating,id} = req.body
+  const sql = `UPDATE workers SET  
+               workerNumberOfJobs = workerNumberOfJobs + 1 , 
+               workerTotalRating = workerTotalRating + ?,
+               workerRating = workerTotalRating / workerNumberOfJobs
+               WHERE workersId = ?`
+  conn.query(sql,[rating , id],(err,results)=>{
+    if(err){
+      console.log(err)
+      res.status(500).json(err)
+    }
+    console.log(results)
+    res.status(200).json(results)
+  })
+})
 
 workerRouter.post('/login', authenticateToken, async (req, res) => {
     const { workerEmail, workerPassword } = req.body;
@@ -222,6 +239,22 @@ workerRouter.post('/login', authenticateToken, async (req, res) => {
       res.status(200).json(results);
     });
   });
+
+
+  workerRouter.put('/changeavailability/:workersId',(req,res)=>{
+    const workersId = req.params.workersId
+    const workerAvailabillity = req.body.workerAvailabillity
+    const sql = `UPDATE workers SET workerAvailabillity = ? WHERE workersId = ?`
+
+    conn.query(sql,[workerAvailabillity,workersId],(err,results)=>{
+      if(err){
+        console.log(err)
+        res.status(500).json(err)
+      }
+      console.log(results)
+      res.status(200).json(results)
+    })
+  })
   
   workerRouter.post('/uploadFile', (req, res, next) => {
     const storage = multer.diskStorage({
@@ -275,6 +308,8 @@ workerRouter.post('/login', authenticateToken, async (req, res) => {
     })
     
   });
+
+
 
   
 

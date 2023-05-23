@@ -2,11 +2,12 @@ import { View, Text, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import axios from "axios"
-export default function ReportScreen() {
+import Link from '../Link'
+export default function ReportScreen(props) {
     const [reports ,setReports] = useState([]) 
 
 useEffect(()=>{
-    axios.get("http://192.168.103.7:4000/api/reportsofclients/getreportsofclientsbyworkerid/5")
+    axios.get(`http://${Link}:4000/api/reportsofclients/getreportsofclientsbyworkerid/${props.route.params.id}`)
     .then(res=>{
         setReports(res.data)
         console.log(reports)
@@ -16,9 +17,6 @@ useEffect(()=>{
     })
 },[])
    
-
-
-
   return (
     <View  style = {styles.container}>
         <View style ={styles.subContainer}>

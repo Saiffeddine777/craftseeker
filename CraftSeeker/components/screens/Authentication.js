@@ -139,7 +139,8 @@ export default function Authentication() {
   } 
 
   return (
-    <>
+    <View style={styles.container}>
+        <View style={styles.subcontainer}>
       <StatusBar backgroundColor="#4a90e2" barStyle="light-content" />
       {/*LOGO*/}
       {!focused &&
@@ -148,12 +149,13 @@ export default function Authentication() {
             source={require('../../assets/logo.png')}
             style={styles.logo}
           />
-          <Text style={styles.welcomeText}>Welcome to Craft Seeker</Text>
+          <Text style={styles.welcomeText}>Welcome to CraftSeeker</Text>
         </View>
       }
       {/*INPUTS*/}
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
+          
           <Icon name="envelope" style={styles.inputIcon} />
           <TextInput
             style={styles.input}
@@ -187,14 +189,14 @@ export default function Authentication() {
           </Picker>
         </View>
 
-        <View style={styles.checkboxContainer}>
+        {/* <View style={styles.checkboxContainer}>
           <CheckBox
             title="Remember Password"
             checked={rememberPassword}
             onPress={() => setRememberPassword(!rememberPassword)}
             containerStyle={styles.checkbox}
           />
-        </View>
+        </View> */}
       </View>
 
       {/*LOGIN && REGISTER */}
@@ -258,12 +260,32 @@ export default function Authentication() {
           />
         </View>
       </Modal>
-    </>
+    </View>
+    </View>
   );
 }
 
 {/*STYLES*/ }
 const styles = StyleSheet.create({
+  container: {
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#036BB9',
+    borderRadius: 10,
+  },
+  
+  subcontainer: {
+    borderWidth: 8,
+    height: '102%',
+    width: '102%',
+    borderRadius: 8,
+    left: '-1.5%',
+    borderColor: 'white',
+    top: '-1%',
+  },
   logoContainer: {
     marginTop: -35,
     width: "100%",

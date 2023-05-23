@@ -46,7 +46,7 @@ const handleAcceptance=(taskTitle,taskId,clientId,workersId)=>{
             senderId:workersId,
             receiverId:clientId,
             messageText: `task request ${taskTitle} with the id of ${taskId} has been accepted `,
-            createdAt: Date.now()
+            createdAt: new Date(Date.now()).toLocaleString()
           })
           console.log("message sent")}
         else if(res.data.length===0){
@@ -59,11 +59,11 @@ const handleAcceptance=(taskTitle,taskId,clientId,workersId)=>{
             console.log(uniqueId)
             roomId = uniqueId
             socket.emit("receive",{
-              uniqueId:res.data[0].roomId,
+              uniqueId:roomId,
               senderId:workersId,
               receiverId:clientId,
               messageText: `task request ${taskTitle} with the id of ${taskId} has been accepted `,
-              createdAt: Date.now()
+              createdAt: new Date(Date.now()).toLocaleString()
             })
             console.log("message sent")
           })
@@ -95,9 +95,11 @@ const handleAcceptance=(taskTitle,taskId,clientId,workersId)=>{
             senderId:workersId,
             receiverId:clientId,
             messageText: `task request ${taskTitle} with the id of ${taskId} has been denied `,
-            createdAt: Date.now()
-          })
-          console.log("message sent")}
+            createdAt: new Date(Date.now()).toLocaleString()
+          }
+          )
+          console.log("message sent to existing chatroom")
+          }
         else if(res.data.length===0){
           socket.emit("createaroom",{
             workerId:workersId,
@@ -108,20 +110,20 @@ const handleAcceptance=(taskTitle,taskId,clientId,workersId)=>{
             console.log(uniqueId)
             roomId = uniqueId
             socket.emit("receive",{
-              uniqueId:res.data[0].roomId,
+              uniqueId:roomId,
               senderId:workersId,
               receiverId:clientId,
-              messageText: `task request ${taskTitle} with the id of ${taskId} has been accepted `,
-              createdAt: Date.now()
+              messageText: `task request ${taskTitle} with the id of ${taskId} has been denied `,
+              createdAt: new Date(Date.now()).toLocaleString()
             })
-            console.log("message sent")
+            console.log("message sent atfer creating a chat room")
           })
         }
       })
       .catch((err)=>{
            console.log(err)
       })
-    axios.put(`http://${Link}:4000/api/tasks/changetaskstatus/${workersId }`,{taskStatus:"denied"})
+    axios.put(`http://${Link}:4000/api/tasks/changetaskstatus/${taskId}`,{taskStatus:"denied"})
     .then(results=>{
      console.log(results)
      Alert.alert("you have denied this request")
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     padding: 10,
     marginVertical: 10,
+    width:'100%'
   },
   titleContainer: {
     alignItems: "center",
@@ -198,20 +201,23 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   container: {
-    borderWidth: 17,
-    height: 811,
-    borderColor: "#036BB9",
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#036BB9',
     borderRadius: 10,
   },
-  subContainer: {
-    borderWidth: 17,
-    height: 782,
-    width: 382,
-    borderColor: "white",
-    borderRadius: 10,
-    left: -2,
-    top: -3,
-    bottom: -3,
+  
+  subcontainer: {
+    borderWidth: 8,
+    height: '102%',
+    width: '102%',
+    borderRadius: 8,
+    left: '-1.5%',
+    borderColor: 'white',
+    top: '-1%',
   },
   deny: {
     width: 150,

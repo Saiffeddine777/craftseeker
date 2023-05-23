@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image ,ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image ,ScrollView, Alert, Modal } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import axios from 'axios';
+import { Picker } from '@react-native-picker/picker';
 // import { useNavigation } from '@react-navigation/native';
 import Link from '../../Link';
 
@@ -13,6 +13,10 @@ const ClientProfil = (props) => {
   const [offersAccepted, setOffersAccepted] = useState([]);
   const [offersCompleted, setOffersCompleted] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [ratingModal ,setRatingModal] = useState(false)
+  const [listVisible,setLsitVisible] = useState(false) 
+  const [selectedValue,setSelectedValue] = useState(0)
+  const [ratedWorker, setRatedWorker] = useState("")
 
   const user = props.route.params.id;
   useEffect(()=>{
@@ -56,22 +60,41 @@ const ClientProfil = (props) => {
     axios.get(`http://${Link}:4000/api/tasks/getclientacceptedoffers/${user}`)
       .then((res) => {
         setOffersAccepted(res.data);
+
       })
       .catch((err) => {
         console.log(err);
       });
   }, [toggle]);
 
-  const handleCompletion = function (id) {
-    axios.put(`http://${Link}:4000/api/tasks/changetaskstatus/${id}`)
+  const handleCompletion = function (id,workersId) {
+    axios.put(`http://${Link}:4000/api/tasks/changetaskstatustocompleted/${id}`)
       .then((res) => {
         console.log(res, "statusupdated");
+        Alert.alert("the task is performed by the worker Congrats!")
         handleToggle()
+        setRatingModal(!ratingModal)
+        setRatedWorker(workersId)
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const handleRating=function(workerId,rating){
+    axios.post(`http://${Link}:4000/api/workers/rateaworker`,
+      {
+        id: workerId,
+        rating: rating
+      }
+    ).then(res=>{
+      console.log(res)
+      Alert.alert("thanks for your contribution to our plateform")
+      setRatingModal(!ratingModal)
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
+   
   useEffect(()=>{
     console.log(offersCompleted,"completed");
     console.log(offersAccepted,"accepted");
@@ -91,25 +114,48 @@ const ClientProfil = (props) => {
         <View style={styles.info}>
           <Text style={styles.name}>{clientData.clientFirstName}</Text>
           <Text style={styles.email}>{clientData.clientEmail}</Text>
-          <Text style={styles.phone}>{clientData.clientFirstName}</Text>
+          <Text style={styles.phone}>{clientData.clientPhone}</Text>
           <Text style={styles.address}>{clientData.clientLastName}</Text>
         </View>
       </View>
       
+      {ratingModal &&
+     <View>
+      <Text>Rate This Worker</Text>
+       <Picker 
+       selectedValue={selectedValue}
+       onValueChange={number =>setSelectedValue(number)}
+       >
+        <Picker.Item label='1' value={1}></Picker.Item>
+        <Picker.Item label='2' value={2}></Picker.Item>
+        <Picker.Item label='3' value={3}></Picker.Item>
+        <Picker.Item label='4' value={4}></Picker.Item>
+        <Picker.Item label='5' value={5}></Picker.Item>
+       </Picker>
+       <Button title = "Rate" onPress={()=>{handleRating(ratedWorker,selectedValue)}}></Button>
+     </View>  
+     }
+
       
-      <View style={styles.card}>
-        <Text style={styles.requests}>tasks In Progress</Text>
-        <ScrollView>
-        {offersAccepted.map((e,i)=>{
-          return <View key={i}> 
-          <Text>{e.taskTitle}</Text>
-          <Text>{e.taskTitle}</Text>
-          <Text>Performed By {e.workerFirstName} {e.workerLastName}</Text>
-          <Button title="task performed" onPress={()=>handleCompletion(e.taskId)}> Task Performed </Button>
-               </View>
-        })}
-        </ScrollView>
+      
+      <View style={styles.container}>
+  <Text style={styles.title}>Tasks In Progress</Text>
+  <ScrollView>
+    {offersAccepted.map((e, i) => (
+      <>
+      <View key={i} style={styles.card}>
+        <Text>{e.taskTitle}</Text>
+        <Text>{e.taskText}</Text>
+        <Text>Performed By {e.workerFirstName} {e.workerLastName}</Text>
+        <Button title="Task Performed" onPress={() => handleCompletion(e.taskId,e.workersId)} />
       </View>
+      
+      </>
+    ))}
+  </ScrollView>
+</View>
+
+  
       
        
       
@@ -119,7 +165,7 @@ const ClientProfil = (props) => {
         {offersCompleted.map((e,i)=>{
           return <View key ={i}>
                 <Text>{e.taskTitle}</Text>
-               <Text>{e.taskTitle}</Text>
+               <Text>{e.taskText}</Text>
                <Text>Performed By {e.workerFirstName} {e.workerLastName}</Text>
                </View>
         })}

@@ -75,6 +75,7 @@ const HomePage = (props) => {
     }
     console.log(item.imageUrl,"<========")
     return (
+      <TouchableOpacity onPress={()=>{navigation.navigate("WorkerProfil",{clientProps:{workersId:item.workersId,clientId:user}})}}>
       <View key={item.workersId} style={[styles.card, { zIndex: 1 }]}>
 
 <Image source={{ uri: item.imageUrl&&item.imageUrl }} style={styles.cardImage} />
@@ -101,16 +102,9 @@ const HomePage = (props) => {
   onChange={() => {}}
   starSpacing={5}
 />
-{/* 
-<Button
-      title="Demand"
-      style={{ borderRadius: 10 }}
-      onPress={() => {
-        // handle button press here
-      }}
-    /> */}
         </View>
       </View>
+      </TouchableOpacity>
     );
   };
 
@@ -199,25 +193,27 @@ const HomePage = (props) => {
 };
 
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ 
   container: {
-    borderWidth: 16,
-    height: '94.8%',
-    top: '5%',
-    width: '100%',
-    backgroundColor: 'white',
-    borderColor: '#036BB9',
-    borderRadius: 10,
-  },
-  subcontainer: {
-    borderWidth: 8,
-    height: '102%',
-    width: '102%',
-    borderRadius: 8,
-    left: '-1.5%',
-    borderColor: 'white',
-    top: '-1%',
-  },
+  borderWidth: 16,
+  height: '100%',
+  top: '0%',
+  width: '100%',
+  backgroundColor: 'white',
+  borderColor: '#036BB9',
+  borderRadius: 10,
+},
+
+subcontainer: {
+  borderWidth: 8,
+  height: '102%',
+  width: '102%',
+  borderRadius: 8,
+  left: '-1.5%',
+  borderColor: 'white',
+  top: '-1%',
+},
+
  filter:{
 left:250,
 height:40,
@@ -226,15 +222,16 @@ top:-35,
  },
  filterMenu: {
   position: 'absolute',
-  top: 200,
+  top: 190,
   right: 15,
   backgroundColor: '#fff',
   borderWidth: 1,
   borderRadius: 5,
   padding: 10,
+  width:150
 },
 filterMenuItem: {
-  fontSize: 10,
+  fontSize: 12,
   fontWeight: 'bold',
   padding: 5,
 },

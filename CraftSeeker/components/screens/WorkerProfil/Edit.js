@@ -12,12 +12,17 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
 import axios from 'axios';
+import Link from '../Link';
 
 
 
-const Edit = () => {
+const Edit = (props) => 
+
+
+{
   const [workerFirstName, setFirstName] = useState('');
   const [workerLastName, setLastName] = useState('');
   const [workerEmail, setEmail] = useState('');
@@ -25,7 +30,8 @@ const Edit = () => {
   const [workerCategory, setCategory] = useState('');
   const [workerPhoneNumber, setPhone] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
-
+  const id = props.route.params.id
+  const navigation = useNavigation()
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -98,7 +104,7 @@ const Edit = () => {
     data.append('phoneNumber', workerPhoneNumber);
 
     try {
-      const response = await axios.put(`http://localhost:4000/api/Workers/update${id}`, data);
+      const response = await axios.put(`http://${Link}:4000/api/Workers/update${id}`, data);
       // set the state values to the updated worker information
       setFirstName(response.data.firstName);
       setLastName(response.data.lastName);
@@ -107,6 +113,7 @@ const Edit = () => {
       setCategory(response.data.category);
       setPhone(response.data.phoneNumber);
       alert('Profile updated successfully!');
+       then(navigation.navigate('WorkerProfil', { id: props.route.params.id }))
     } catch (error) {
       alert('Failed to update profile.');
     }

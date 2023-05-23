@@ -139,7 +139,7 @@ taskRouter.get("/getclientcompletedoffers/:clientId",(req,res)=>{
     })
 })
 
-taskRouter.put('/changetaskstatus/:id',(req,res)=>{
+taskRouter.put('/changetaskstatustocompleted/:id',(req,res)=>{
     const id = req.params.id
     const sql=`update tasks 
        set taskStatus ="Completed"
@@ -153,5 +153,23 @@ taskRouter.put('/changetaskstatus/:id',(req,res)=>{
         res.status(200).json(results)
     })
 })
+
+
+taskRouter.put('/changetaskstatus/:id',(req,res)=>{
+    const {taskStatus}= req.body
+    const id = req.params.id
+    const sql=`update tasks 
+       set taskStatus = ?
+       where taskId = ? ;`
+       conn.query(sql,[taskStatus,id],(err,results)=>{
+        if(err){
+            console.log(err)
+            res.status(500).json(err)
+        }
+        console.log(results)
+        res.status(200).json(results)
+    })
+})
+
 
 module.exports = taskRouter

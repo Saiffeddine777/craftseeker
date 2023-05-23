@@ -19,6 +19,22 @@ const SignUpClient = () => {
   const [profilePictureUrl, setProfilePictureUrl] = useState('');
   const [Url,setUrl] = useState('')
 
+  const verifyUpperCase = function (str){
+    var count = 0
+     for (let i = 0; i < str.length; i++) {
+       const alphabet ="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        for(let j = 0 ; j<alphabet.length;j++){
+           if(str[i]===alphabet[j]){
+               count++
+           }
+       }
+     }
+       if (count>0){
+           return true
+       }
+       else return false
+   }
+
   const generateId = function () {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const idLength = 32;
@@ -104,7 +120,17 @@ const handleSignup = async () => {
 
   if (userInfo.confirmPassword !== userInfo.password) {
     Alert.alert("Passwords Don't Match!");
-  } else {
+ 
+  }
+
+  if(!verifyUpperCase(userInfo.password)){
+    Alert.alert("You must at least have one uppercase character in your password")
+  }
+
+   else if(!userInfo.email.includes("@")){
+       Alert.alert("Give a proper Email")
+  }
+  else {
     try {
     
      
@@ -155,16 +181,29 @@ const obj= {
   };
 
   return (
-    <View >
-      
+    <View style={styles.container} >
+      <View style={styles.subcontainer}>
+  
+          <Image
+            source={require('../../../assets/logo.png')}
+            style={styles.logo}
+          /><TouchableOpacity onPress={() => navigation.goBack()}>
+             <Image
+            source={require('../client/back.png')}
+            style={styles.back} 
+          />
+          </TouchableOpacity>
       <StatusBar backgroundColor="#4a90e2" barStyle="light-content" />
       <TouchableOpacity onPress={handleSelectPicture}>
   {profilePicture ? (
     <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
-  ) : (
-    <View style={styles.profilePicturePlaceholder}>
-      <Text style={styles.profilePicturePlaceholderText}>Choose a Profile Picture</Text>
-    </View>
+  ) : (<TouchableOpacity
+    style={styles.profilePicturePlaceholder}
+    onPress={handleSelectPicture}
+  >
+    <Text style={styles.profilePicturePlaceholderText}>Choose a Profile Picture</Text>
+  </TouchableOpacity>
+  
   )}
 </TouchableOpacity>
 
@@ -193,19 +232,20 @@ const obj= {
             />
           )}
         </View>
+        <View style={{top:0}}> 
         <TouchableHighlight
-          style={{ flex: 1, alignSelf: "center", backgroundColor: '#83b5ed', width: "40%", borderRadius: 10, height: 30, justifyContent: "center" }}
+         style={{ flex: 1, alignSelf: "center", backgroundColor: '#83b5ed', width: "40%", borderRadius: 10, height: 30, justifyContent: "center",top:0 }}
           activeOpacity={0.6}
           underlayColor="#24b9e6"
           onPress={handleSignup} >
           <Text  style={{ textAlign: "center" }}>Submit</Text>
-
+  
         </TouchableHighlight>
- 
+ </View>
       </ScrollView>
 
 
-
+      </View>
     </View>
   );
 };
@@ -217,7 +257,59 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     // marginVertical: 15,
-   
+    position:'absolute',
+   top:'37%',
+   width:'80%',
+   left:'7%'
+  },
+  logo:{
+ width:'40%',
+ height:'10%',
+ left:'70%'
+  },
+  back:{
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    resizeMode: 'contain',
+    top:'-170%',
+  },
+
+    profilePicturePlaceholder: {
+      top:'-10%',
+      backgroundColor: '#F0F4E3',
+      borderRadius: 100,
+      padding: 16,
+      height:'50%',
+      alignItems: 'center',
+      width:'50%',
+      left:'10%'
+    },
+    profilePicturePlaceholderText: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: '#000000',
+      top:'40%',
+    },
+  
+  container: {
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#036BB9',
+    borderRadius: 10,
+  },
+  
+  subcontainer: {
+    borderWidth: 8,
+    height: '102%',
+    width: '102%',
+    borderRadius: 8,
+    left: '-1.5%',
+    borderColor: 'white',
+    top: '-1%',
   },
   title: {
     color: '#0386D0',

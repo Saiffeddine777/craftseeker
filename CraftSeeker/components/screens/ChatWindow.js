@@ -2,11 +2,13 @@ import { View, Text, Button, TouchableHighlight } from 'react-native'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { TextInput,StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 import { io } from 'socket.io-client'
 import { TouchableOpacity } from 'react-native'
-
+// import { NativeBaseConfigProvider } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Link from './Link'
+
 // import { Center, Divider } from "native-base";
 export default function ChatWindow(props) {
   const [toggle ,setToggle] = useState(false)
@@ -68,18 +70,14 @@ export default function ChatWindow(props) {
 
 
   return (
-    // <Center>
-    <KeyboardAwareScrollView
-     contentContainerStyle={{flexGrow: 1}} 
-     extraHeight={100}
-     keyboardShouldPersistTaps="handled"
-    >
+ 
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <View style = {styles.titleContainer}>
         <Text style = {styles.title}>{receiverName}</Text>
         </View>
         <View>
+          <ScrollView style={styles.scroll}>
           {messages.map((e, i) => {
             console.log(e.messageText);
             const isSent= senderId===e.sender
@@ -92,6 +90,7 @@ export default function ChatWindow(props) {
               </View>
             );
           })}
+          </ScrollView>
         </View>
 
         <View style={styles.inputContainer}>
@@ -108,7 +107,8 @@ export default function ChatWindow(props) {
         </View>
       </View>
     </View>
-  </KeyboardAwareScrollView>
+                                                      
+
 );
 }
 
@@ -116,6 +116,11 @@ const styles = StyleSheet.create({
   dateText:{
     fontSize:12,
     color :'#999',
+  },
+  scroll:{
+    height:580,
+    position:"absolute",
+    left: 20
   },
   messageContainer: {
     maxWidth: '80%',
@@ -150,8 +155,8 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    backgroundColor: '#036BB9',
-    padding: 10,
+    backgroundColor: 'white',
+    padding: 13,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     alignItems: 'center',
@@ -159,32 +164,35 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'black',
     textAlign: 'center',
     marginBottom: 8,
-    textShadowColor: '#000',
+    textShadowColor: ' ',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 1,
   },
   container: {
-    borderWidth: 17,
-    height: 811,
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
     borderColor: '#036BB9',
     borderRadius: 10,
   },
-  subContainer: {
-    borderWidth: 17,
-    height: 782,
-    width: 382,
+  
+  subcontainer: {
+    borderWidth: 8,
+    height: '102%',
+    width: '102%',
+    borderRadius: 8,
+    left: '-1.5%',
     borderColor: 'white',
-    borderRadius: 10,
-    left: -2,
-    top: -3,
-    bottom: -3,
+    top: '-1%',
   },
   inputContainer: {
     position: 'absolute',
-    bottom: 0,
+    bottom:-500,
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -197,6 +205,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     borderRadius: 50,
+    marginBottom:-150
   },
   input: {
     flex: 1,

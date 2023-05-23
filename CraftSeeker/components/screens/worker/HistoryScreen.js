@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Link from '../Link'
 
-export default function HistoryScreen() {
+export default function HistoryScreen(props) {
     const [tasks , setTasks] = useState([])
 
     useEffect(()=>{
-        axios.get("http://192.168.103.7:4000/api/tasks/getworkscompeleted/9")
+        axios.get(`http://${Link}:4000/api/tasks/getworkscompeleted/${props.route.params.id}`)
         .then((res)=>{
             setTasks(res.data)
             console.log(tasks)

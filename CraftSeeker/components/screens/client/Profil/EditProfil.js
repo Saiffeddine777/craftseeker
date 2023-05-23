@@ -14,10 +14,11 @@ import * as ImagePicker from 'expo-image-picker';
 // import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 // import { Asset } from 'expo-media-library';
 import axios from 'axios'
+import Link from '../../Link';
 // import uri from '../../../link'
 
 
-const EditProfil = (props) => {
+const EditProfilclient = (props) => {
   const [clientFirstName, setFirstName] = useState('');
   const [clientLastName, setLastName] = useState('');
   const [clientEmail, setEmail] = useState('');
@@ -59,7 +60,7 @@ const EditProfil = (props) => {
   
       try {
         const response = await axios.post(
-          `http://192.168.1.5:4000/api/clients/uploadFile`,
+          `http://${Link}:4000/api/clients/uploadFile`,
           formData,
           {
             headers: {
@@ -100,7 +101,7 @@ const EditProfil = (props) => {
   
       try {
         const response = await axios.post(
-          'http://192.168.1.5:4000/api/clients/uploadFile',
+          `http://${Link}:4000/api/clients/uploadFile`,
           formData,
           {
             headers: {
@@ -120,17 +121,17 @@ const EditProfil = (props) => {
 
 
   const handleSave = async () => {
-    // const data = new FormData();
-    // data.append('profile-image', {
-    //   uri: profilePicture,
-    //   type: 'image/jpeg',
-    //   name: 'profilePicture.jpg',
-    // });
-    // data.append('clientFirstName', clientFirstName);
-    // data.append('clientLastName', clientLastName);
-    // data.append('clientEmail', clientEmail);
-    // data.append('clientAdress', clientAdress);
-    // data.append('clientPhone', clientPhoneNumber);
+    const data = new FormData();
+    data.append('profile-image', {
+      uri: profilePicture,
+      type: 'image/jpeg',
+      name: 'profilePicture.jpg',
+    });
+    data.append('clientFirstName', clientFirstName);
+    data.append('clientLastName', clientLastName);
+    data.append('clientEmail', clientEmail);
+    data.append('clientAdress', clientAdress);
+    data.append('clientPhone', clientPhoneNumber);
   console.log(props.route.params.id,'id','========',{
     clientFirstName: clientFirstName,
     clientLastName: clientLastName,
@@ -144,7 +145,7 @@ const EditProfil = (props) => {
       
       // Update client information with the Cloudinary image URL
       const response = await axios.put(
-        `http://192.168.1.5:4000/api/clients/updateUser/${props.route.params.id}`,
+        `http://${Link}:4000/api/clients/updateUser/${props.route.params.id}`,
         {
           clientFirstName: clientFirstName,
           clientLastName: clientLastName,
@@ -174,13 +175,10 @@ const EditProfil = (props) => {
     <ScrollView >
       <TouchableOpacity style={styles.profilePictureContainer} onPress={handleSelectPicturee}>
         {profilePicture ? (
-          <Image source={{ uri: Data.imageUrl.slice(1,clientData.imageUrl.length-1)}} style={styles.profilePicture} />
+          <Image source={{ uri: data.imageUrl.slice(1,data.imageUrl.length-1)}} style={styles.profilePicture} />
         ) : (
           <View style={styles.profilePicturePlaceholder}>
             <Text style={styles.profilePicturePlaceholderText}>Choose a Profile Picture</Text>
-            
-
-
           </View>
         )}
       </TouchableOpacity>
@@ -268,4 +266,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default EditProfil;
+export default EditProfilclient;
