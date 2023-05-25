@@ -83,10 +83,14 @@ CREATE TABLE IF NOT EXISTS `craftseeker`.`chatrooms` (
   INDEX `reportsoftheworkers_ibfk_20_idx` (`workersId` ASC) VISIBLE,
   CONSTRAINT `reportsoftheworkers_ibfk_10`
     FOREIGN KEY (`clientId`)
-    REFERENCES `craftseeker`.`clients` (`clientId`),
+    REFERENCES `craftseeker`.`clients` (`clientId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `reportsoftheworkers_ibfk_20`
     FOREIGN KEY (`workersId`)
-    REFERENCES `craftseeker`.`workers` (`workersId`))
+    REFERENCES `craftseeker`.`workers` (`workersId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -106,12 +110,16 @@ CREATE TABLE IF NOT EXISTS `craftseeker`.`reportsoftheclients` (
   INDEX `reportsoftheclients_ibfk_2_idx` (`workersId` ASC) VISIBLE,
   CONSTRAINT `reportsoftheclients_ibfk_1`
     FOREIGN KEY (`clientId`)
-    REFERENCES `craftseeker`.`clients` (`clientId`),
+    REFERENCES `craftseeker`.`clients` (`clientId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `reportsoftheclients_ibfk_2`
     FOREIGN KEY (`workersId`)
-    REFERENCES `craftseeker`.`workers` (`workersId`))
+    REFERENCES `craftseeker`.`workers` (`workersId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -130,10 +138,14 @@ CREATE TABLE IF NOT EXISTS `craftseeker`.`reportsoftheworkers` (
   INDEX `reportsoftheworkers_ibfk_2_idx` (`workersId` ASC) VISIBLE,
   CONSTRAINT `reportsoftheworkers_ibfk_1`
     FOREIGN KEY (`clientId`)
-    REFERENCES `craftseeker`.`clients` (`clientId`),
+    REFERENCES `craftseeker`.`clients` (`clientId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `reportsoftheworkers_ibfk_2`
     FOREIGN KEY (`workersId`)
-    REFERENCES `craftseeker`.`workers` (`workersId`))
+    REFERENCES `craftseeker`.`workers` (`workersId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
@@ -153,10 +165,14 @@ CREATE TABLE IF NOT EXISTS `craftseeker`.`reviews` (
   INDEX `reviews_ibfk_2_idx` (`workers_workersId` ASC) VISIBLE,
   CONSTRAINT `reviews_ibfk_1`
     FOREIGN KEY (`clients_clientId`)
-    REFERENCES `craftseeker`.`clients` (`clientId`),
+    REFERENCES `craftseeker`.`clients` (`clientId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `reviews_ibfk_2`
     FOREIGN KEY (`workers_workersId`)
-    REFERENCES `craftseeker`.`workers` (`workersId`))
+    REFERENCES `craftseeker`.`workers` (`workersId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
@@ -178,12 +194,16 @@ CREATE TABLE IF NOT EXISTS `craftseeker`.`tasks` (
   INDEX `tasks_ibfk_2_idx` (`workers_workersId` ASC) VISIBLE,
   CONSTRAINT `tasks_ibfk_1`
     FOREIGN KEY (`clients_clientId`)
-    REFERENCES `craftseeker`.`clients` (`clientId`),
+    REFERENCES `craftseeker`.`clients` (`clientId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_2`
     FOREIGN KEY (`workers_workersId`)
-    REFERENCES `craftseeker`.`workers` (`workersId`))
+    REFERENCES `craftseeker`.`workers` (`workersId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
+AUTO_INCREMENT = 47
 DEFAULT CHARACTER SET = utf8mb3;
 
 
