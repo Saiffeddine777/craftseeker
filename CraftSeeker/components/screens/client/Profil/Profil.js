@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import Link from '../../Link';
 
 const ClientProfil = (props) => {
-  const [client, setclient] = useState([]);
+  const [client, setclient] = useState({});
   const [up, setup] = useState(false);
   const navigation = useNavigation();
   const [offersAccepted, setOffersAccepted] = useState([]);
@@ -17,6 +17,7 @@ const ClientProfil = (props) => {
   const [listVisible,setLsitVisible] = useState(false) 
   const [selectedValue,setSelectedValue] = useState(0)
   const [ratedWorker, setRatedWorker] = useState("")
+  // const [clientData,setClientData] = useState({})
 
   const user = props.route.params.id;
   useEffect(()=>{
@@ -31,7 +32,7 @@ const ClientProfil = (props) => {
   const fetchclientData = async () => {
     try {
       const response = await axios.get(`http://${Link}:4000/api/clients/getone/${user}`);
-      setclient(response.data);
+      setclient(response.data[0]);
     } catch (error) {
       console.log('Failed to fetch worker data:', error);
     }
@@ -43,7 +44,7 @@ const ClientProfil = (props) => {
 
  
 
-  const clientData = client[0];
+  
 
   useEffect(() => {
     axios.get(`http://${Link}:4000/api/tasks/getclientcompletedoffers/${user}`)
@@ -94,6 +95,9 @@ const ClientProfil = (props) => {
       console.log(err)
     })
   }
+  useEffect(()=>{
+    console.log(client.imageUrl)
+  },[])
    
   useEffect(()=>{
     console.log(offersCompleted,"completed");
@@ -108,14 +112,14 @@ const ClientProfil = (props) => {
     <ScrollView>
     <View style={styles.container}>
       <View style={styles.card}>
-      {console.log(clientData.imageUrl.slice(1,clientData.imageUrl.length-1))}
+      {console.log(client.imageUrl)}
         
-        <Image source={{ uri: clientData.imageUrl.slice(1,clientData.imageUrl.length-1)}} style={styles.image} />
+        {client.imageUrl && <Image source={{ uri: client.imageUrl}} style={styles.image} />}
         <View style={styles.info}>
-          <Text style={styles.name}>{clientData.clientFirstName}</Text>
-          <Text style={styles.email}>{clientData.clientEmail}</Text>
-          <Text style={styles.phone}>{clientData.clientPhone}</Text>
-          <Text style={styles.address}>{clientData.clientLastName}</Text>
+          <Text style={styles.name}>{client.clientFirstName}</Text>
+          <Text style={styles.email}>{client.clientEmail}</Text>
+          <Text style={styles.phone}>{client.clientPhone}</Text>
+          <Text style={styles.address}>{client.clientLastName}</Text>
         </View>
       </View>
       

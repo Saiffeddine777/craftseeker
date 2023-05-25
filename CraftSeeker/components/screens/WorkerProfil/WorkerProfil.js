@@ -39,7 +39,7 @@ const WorkerProfil = (props) => {
       })
       .then((res) => {
         console.log(res);
-        setToggleTextArea()
+        setToggleTextArea(!toggleTextArea)
         Alert.alert("report filed");
       })
       .catch((err) => {

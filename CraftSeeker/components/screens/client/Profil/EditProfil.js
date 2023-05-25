@@ -15,7 +15,11 @@ import * as ImagePicker from 'expo-image-picker';
 // import { Asset } from 'expo-media-library';
 import axios from 'axios'
 import Link from '../../Link';
+import { useNavigation } from '@react-navigation/native';
 // import uri from '../../../link'
+
+
+
 
 
 const EditProfilclient = (props) => {
@@ -27,6 +31,7 @@ const EditProfilclient = (props) => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState('');
 
+  const navigation = useNavigation()
   useEffect(() => {
     console.log(props.route.params,'the id ');
     (async () => {
@@ -163,19 +168,24 @@ const EditProfilclient = (props) => {
       setEmail(response.data.clientEmail);
       setAddress(response.data.clientAdress);
       setPhone(response.data.clientphone);
+      setProfilePictureUrl(response.data.imageUrl)
+      navigation.navigate("ClientProfil", {id :props.route.params.id})
       alert('Profile updated successfully!');
     } catch (error) {
         console.log(JSON.stringify(error),'err');
       alert('Failed to update profile.');
     }
   };
+  useEffect(()=>{
+    console.log(profilePictureUrl,"state of the image url")
+  },[])
   
 
   return (
     <ScrollView >
       <TouchableOpacity style={styles.profilePictureContainer} onPress={handleSelectPicturee}>
         {profilePicture ? (
-          <Image source={{ uri: data.imageUrl.slice(1,data.imageUrl.length-1)}} style={styles.profilePicture} />
+          <Image source={{ uri: profilePictureUrl}} style={styles.profilePicture} />
         ) : (
           <View style={styles.profilePicturePlaceholder}>
             <Text style={styles.profilePicturePlaceholderText}>Choose a Profile Picture</Text>
