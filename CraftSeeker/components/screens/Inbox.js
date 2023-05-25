@@ -45,7 +45,7 @@ export default function Inbox(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.subContainer}>
+    
 
       <View style ={styles.titleContainer}> 
       <Text style = {styles.title}>Chat Box</Text>
@@ -79,7 +79,7 @@ export default function Inbox(props) {
       </ScrollView>
       </View>
      
-      </View>
+   
     </View>
   )
 }
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent :"flex-start",
     flexDirection:"row",
     alignItems : "center",
+    width:325
   },
   noMessages:{
     fontSize:24,

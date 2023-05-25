@@ -7,7 +7,9 @@ import {
   Image,
   Dimensions,
   TextInput,
+  KeyboardAvoidingView,
   Alert,
+  Modal,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import axios from "axios";
@@ -37,6 +39,7 @@ const WorkerProfil = (props) => {
       })
       .then((res) => {
         console.log(res);
+        setToggleTextArea()
         Alert.alert("report filed");
       })
       .catch((err) => {
@@ -122,7 +125,12 @@ useEffect(() => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+    style={styles.container}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+  >
+   
       <View style={styles.card}>
         <View style={styles.info}>
           {worker.imageUrl &&
@@ -181,39 +189,82 @@ useEffect(() => {
         </>
       )}
       {props.route.params.clientProps && (
+        <View style={styles.reportButtonContainer}>
         <Button
           title="Report this worker"
           onPress={() => {
             setToggleTextArea(!toggleTextArea);
           }}
         ></Button>
+         </View>
       )}
 
-      {toggleTextArea && (
-        <>
+        <Modal visible={toggleTextArea} animationType="slide">
+        
+        <View style={styles.container1}>
+        <View style = {styles.titleView}>
+        <Text style ={styles.title}>Report this worker</Text>
+        </View>
+        <View style={styles.inputs}>
           <TextInput
             placeholder="Report Title"
-            style={{ borderColor: "black", borderWidth: 1 }}
+            style={styles.input}
             onChangeText={(text) => {
               setReportTitle(text);
               console.log(reportTitle);
             }}
-          ></TextInput>
+          />
           <TextInput
             placeholder="Report Body"
-            style={{ borderColor: "black", borderWidth: 1 }}
+            style={styles.input1}
             onChangeText={(text) => {
               setReportBody(text);
               console.log(reportBody);
             }}
-          ></TextInput>
-          <Button title="Send Report" onPress={fileAReport}></Button>
-        </>
-      )}
-    </View>
+          />
+          <View style={styles.modalButtons}>
+  <View style={styles.buttonContainer}>
+    <Button title="Send Report" onPress={fileAReport} />
+  </View>
+  <View style={styles.buttonContainer}>
+    <Button onPress={setToggleTextArea} title="Cancel" />
+  </View>
+</View>
+        </View>
+        </View>
+      </Modal>
+      
+   
+    </KeyboardAvoidingView>
   );
 };
+
 const styles = StyleSheet.create({
+  container1: {
+    borderWidth: 16,
+    height: '100%',
+    top: '0%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#036BB9',
+    borderRadius: 10,
+  },
+  inputs: {
+    marginTop: '60%',
+    },
+     titleView:{
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 10,
+    position : 'absolute',
+    marginTop :"20%" ,
+    left:"20%"
+  
+  },
+   title:{
+    fontSize: 24,
+    fontWeight: 'bold',
+   },
   container: {
     flex: 1,
     right: "5%",
@@ -221,10 +272,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  wrappper: {
-    bottom: 40,
-    position: "absolute",
-  },
+  input: {
+    borderColor: 'black',
+    borderRadius: 5,
+    marginBottom: 10,
+    borderWidth: 2,
+    padding: 10,
+    width: '100%',
+    },
+    input1: {
+      borderColor: 'black',
+      borderRadius: 5,
+      marginBottom: 10,
+      borderWidth: 2,
+      padding: 10,
+      width: '100%',
+      height: 100,
+      },
+      modalButtons: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        marginTop: 10,
+      },
+      buttonContainer: {
+        flex: 1,
+        marginHorizontal: 5, // Adjust this value to decrease the space between buttons
+      },
   card: {
     top: "0%",
     width: "90%",
@@ -269,18 +343,9 @@ const styles = StyleSheet.create({
   bio: {
     fontSize: 16,
   },
-  website: {
-    fontSize: 16,
-    marginTop: 5,
-  },
   phone: {
     fontSize: 16,
     marginTop: 5,
-  },
-  socialIcon: {
-    fontSize: 5,
-    color: "#333",
-    flexDirection: "row",
   },
   editContainer: {
     position: "absolute",
@@ -311,6 +376,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
+  },
+  reportButtonContainer: {
+    bottom: 200,
+  },
+  area: {
+    bottom: 40,
+    position: "absolute",
   },
 });
 

@@ -50,7 +50,7 @@ export default function ChatWindow(props) {
     const day = date.getDate(); // get the day of the month
     const year = date.getFullYear(); // get the year
     const time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); // format the time in 12-hour clock with AM/PM
-    const formattedDate = `${month} ${day}, ${year} at ${time}`; // create the formatted date string
+    const formattedDate = `${month} ${day}, ${year}`; // create the formatted date string
      return formattedDate
 }
   const handleMessageSending=()=>{
@@ -134,7 +134,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     marginVertical: 8,
-    marginLeft: '20%',
+    right:20,
+    marginLeft: '25%',
+
   },
   receivedMessageContainer: {
     alignSelf: 'flex-start',

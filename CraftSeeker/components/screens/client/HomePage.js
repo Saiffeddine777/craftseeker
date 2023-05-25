@@ -78,7 +78,8 @@ const HomePage = (props) => {
       <TouchableOpacity onPress={()=>{navigation.navigate("WorkerProfil",{clientProps:{workersId:item.workersId,clientId:user}})}}>
       <View key={item.workersId} style={[styles.card, { zIndex: 1 }]}>
 
-<Image source={{ uri: item.imageUrl&&item.imageUrl }} style={styles.cardImage} />
+<Image source={{ uri: item.imageUrl.slice(1,item.imageUrl.length-1) }} style={styles.cardImage} />
+
         <View style={{ flexDirection: 'column' }}>
           <Text style={styles.cardTitle}>{item.workerFirstName}</Text>
           <Text style={styles.cardText}>{item.workerJob}</Text>

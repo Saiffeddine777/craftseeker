@@ -47,7 +47,7 @@ export default function App() {
         <Stack.Screen name= "WorkerProfil" component={WorkerProfil}/> 
         <Stack.Screen name= "Edit" component={Edit}/> 
         <Stack.Screen name= "ClientProfil" component = {ClientProfil}/>
-        <Stack.Screen name= "EditProfileClient" component={EditProfilclient} />
+        <Stack.Screen name= "EditProfil" component={EditProfilclient} />
         <Stack.Screen name= "ChatWindow" component={ChatWindow} />
         <Stack.Screen name= "HistoryScreen" component={HistoryScreen}/> 
         <Stack.Screen name= "ReportScreen" component={ReportScreen}/> 

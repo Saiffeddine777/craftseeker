@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   deny: {
     width: 150,
     backgroundColor: "#FF0000",
-    marginLeft: 5,
+  right:15
   },
   accept: {
     width: 150,

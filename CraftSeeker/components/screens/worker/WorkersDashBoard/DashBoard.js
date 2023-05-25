@@ -11,7 +11,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard = (props) => {
   const navigation = useNavigation();
-  const [offerCount, setOfferCount] = useState(0);
+  const [
+    offerCount, setOfferCount] = useState(0);
   const id = props.route.params.id;
   useEffect(() => {
     console.log(id, "fucn");

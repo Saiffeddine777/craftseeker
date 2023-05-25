@@ -3,13 +3,13 @@ import { StyleSheet, View, Text, Image ,ScrollView, Alert, Modal } from 'react-n
 import { Button, Icon } from 'react-native-elements';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
-// import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Link from '../../Link';
 
 const ClientProfil = (props) => {
   const [client, setclient] = useState([]);
   const [up, setup] = useState(false);
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const [offersAccepted, setOffersAccepted] = useState([]);
   const [offersCompleted, setOffersCompleted] = useState([]);
   const [toggle, setToggle] = useState(false);
@@ -137,40 +137,42 @@ const ClientProfil = (props) => {
      }
 
       
-      
-      <View style={styles.container}>
+<View style={styles.container}>
   <Text style={styles.title}>Tasks In Progress</Text>
   <ScrollView>
     {offersAccepted.map((e, i) => (
-      <>
-      <View key={i} style={styles.card}>
-        <Text>{e.taskTitle}</Text>
-        <Text>{e.taskText}</Text>
-        <Text>Performed By {e.workerFirstName} {e.workerLastName}</Text>
-        <Button title="Task Performed" onPress={() => handleCompletion(e.taskId,e.workersId)} />
+      <View key={i} style={styles.taskCard}>
+        <Text style={styles.taskTitle}>{e.taskTitle}</Text>
+        <Text style={styles.taskText}>{e.taskText}</Text>
+        <Text style={styles.taskPerformedBy}>Performed By {e.workerFirstName} {e.workerLastName}</Text>
+        <Button
+          title="Task Performed"
+          onPress={() => handleCompletion(e.taskId, e.workersId)}
+          buttonStyle={styles.taskPerformedButton}
+        />
       </View>
-      
-      </>
     ))}
   </ScrollView>
 </View>
+
 
   
       
        
       
-      <View style={styles.card}>
-        <Text style={styles.history}>Completed tasks</Text>
-        <ScrollView>
-        {offersCompleted.map((e,i)=>{
-          return <View key ={i}>
-                <Text>{e.taskTitle}</Text>
-               <Text>{e.taskText}</Text>
-               <Text>Performed By {e.workerFirstName} {e.workerLastName}</Text>
-               </View>
-        })}
-     </ScrollView>
+<View style={styles.card}>
+  <Text style={styles.history}>Completed tasks</Text>
+  <ScrollView>
+    {offersCompleted.map((e, i) => (
+      <View key={i} style={styles.completedTask}>
+        <Text style={styles.taskTitle}>{e.taskTitle}</Text>
+        <Text style={styles.taskText}>{e.taskText}</Text>
+        <Text style={styles.performedBy}>Performed By {e.workerFirstName} {e.workerLastName}</Text>
       </View>
+    ))}
+  </ScrollView>
+</View>
+
       
       <View style={styles.container}>
       <Button
@@ -231,6 +233,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   history: {
+    
     fontSize: 16,
     marginTop: 5,
   },
@@ -239,11 +242,70 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   editButton: {
+    marginTop : 100,
     backgroundColor: '#007aff',
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
-  }
+  },
+  completedTask: {
+    borderWidth: 1,
+    borderColor: '#999999',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  taskTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#333333',
+  },
+  taskText: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: '#666666',
+  },
+  performedBy: {
+    fontSize: 14,
+    color: '#666666',
+  },
+  taskCard: {
+    width: 300 ,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    marginVertical: 10,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  taskTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#333333',
+  },
+  taskText: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#666666',
+  },
+  taskPerformedBy: {
+    fontSize: 16,
+    color: '#666666',
+  },
+  taskPerformedButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
 });
 
 export default ClientProfil;
