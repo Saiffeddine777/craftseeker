@@ -101,7 +101,7 @@ const Dashboard = (props) => {
               onPress={() => navigation.navigate("OfferScreen", { id: id })}
             >
               <Text>Offers Requests</Text>
-              <Text>you have {offerCount} offers</Text>
+             
             </TouchableOpacity>
             <OffersRequests onCountChange={handleOfferCountChange} />
           </View>
