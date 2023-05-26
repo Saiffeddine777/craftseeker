@@ -1,0 +1,90 @@
+.client-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.client-table th,
+.client-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.client-table th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+.client-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.client-table button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.client-table button:hover {
+  background-color: #45a049;
+}
+
+.client-table form {
+  margin-bottom: 24px;
+}
+
+.client-table label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.client-table input[type='text'],
+.client-table input[type='password'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.client-table img {
+  max-width: 100px;
+  max-height: 100px;
+}
+*/* ClientForm.css */
+
+.client-form {
+  margin-bottom: 24px;
+}
+
+.client-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.client-form input[type='text'],
+.client-form input[type='password'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.client-form button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.client-form button:hover {
+  background-color: #45a049;
+}

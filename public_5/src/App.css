@@ -1,0 +1,194 @@
+/* App.css */
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.clients-container {
+  margin-top: 20px;
+}
+
+.clients-form input {
+  margin-bottom: 10px;
+}
+
+.clients-table {
+  margin-top: 20px;
+}
+
+.clients-table th {
+  font-weight: bold;
+}
+
+.clients-table td {
+  padding: 5px;
+}
+
+.clients-table button {
+  margin-right: 5px;
+}
+
+.table-row-actions {
+  text-align: center;
+}
+
+.table-row-actions button {
+  margin-right: 5px;
+}
+
+.table-row-actions button:hover {
+  background-color: #f5f5f5;
+}
+
+.navigation-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+nav button {
+  padding: 10px 20px;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+nav button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.navigation-container > div {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+/* worker.css */
+.worker-container {
+  padding: 20px;
+}
+
+.worker-container.classic {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.worker-container.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.worker-container h2 {
+  margin-bottom: 20px;
+}
+
+.worker-container form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.worker-container label {
+  margin-bottom: 10px;
+}
+
+.worker-container input[type="text"],
+.worker-container input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.worker-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.worker-container th,
+.worker-container td {
+  padding: 8px;
+  text-align: left;
+}
+
+.worker-container th {
+  font-weight: bold;
+}
+
+.worker-container.classic th {
+  background-color: #f1f1f1;
+}
+
+.worker-container.dark-mode th {
+  background-color: #222;
+}
+
+.worker-container tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.worker-container.classic tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.worker-container.dark-mode tbody tr:nth-child(even) {
+  background-color: #444;
+}
+
+.worker-container button {
+  padding: 8px 16px;
+  margin-right: 8px;
+  background-color: #04AA6D;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.worker-container.classic button {
+  background-color: #04AA6D;
+}
+
+.worker-container.dark-mode button {
+  background-color: #008080;
+}

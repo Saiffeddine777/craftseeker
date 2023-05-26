@@ -1,0 +1,99 @@
+.clients-worker {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clients-worker th,
+.clients-worker td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.clients-worker th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+.clients-worker tr:hover {
+  background-color: #f5f5f5;
+}
+
+.clients-worker button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.clients-worker .button-container {
+  display: flex;
+  align-items: center;
+}
+
+.clients-worker .button-container button {
+  margin-right: 10px;
+}
+
+.clients-worker button:hover {
+  background-color: #45a049;
+}
+
+.clients-worker form {
+  margin-bottom: 24px;
+}
+
+.clients-worker label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.clients-worker input[type='text'],
+.clients-worker input[type='password'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.clients-worker img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+/* WorkerForm.css */
+
+.worker-form {
+  margin-bottom: 24px;
+}
+
+.worker-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.worker-form input[type='text'],
+.worker-form input[type='password'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.worker-form button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.worker-form button:hover {
+  background-color: #45a049;
+}
